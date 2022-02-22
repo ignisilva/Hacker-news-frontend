@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { ErrorBoundary } from "react-error-boundary";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Error from "./pages/Error";
+import About from "./pages/About";
+import Comments from "./pages/Comment";
+import Ask from "./pages/Ask";
+import Jobs from "./pages/Jobs";
+import Show from "./pages/Show";
+import NotFound from "./pages/NotFound";
+import "./styles.css";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ErrorBoundary FallbackComponent={Error}>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="profile/:userId" element={<Profile />} />
+          <Route path="about" element={<About />} />
+          <Route path="comments/:cardId" element={<Comments />} />
+          <Route path="ask" element={<Ask />} />
+          <Route path="jobs" element={<Jobs />} />
+          <Route path="show" element={<Show />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 }
-
-export default App;
